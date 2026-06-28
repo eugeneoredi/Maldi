@@ -1,67 +1,21 @@
-const accommodations = [
-  {
-    id: 1,
-    name: 'Beachfront Cottage',
-    location: 'Silversands Beach, Malindi',
-    description: 'A cozy private cottage steps from the beach, ideal for couples and small families.',
-    price: 'KES 8,000 / night',
-    guests: 4,
-    emoji: '🏡',
-    tags: ['Beach', 'Private', 'Wifi'],
-  },
-  {
-    id: 2,
-    name: 'Coral Reef Villa',
-    location: 'Casuarina Beach, Malindi',
-    description: 'Spacious villa with private pool, ocean views, and a dedicated house manager.',
-    price: 'KES 25,000 / night',
-    guests: 8,
-    emoji: '🏊',
-    tags: ['Pool', 'Villa', 'Ocean View'],
-  },
-  {
-    id: 3,
-    name: 'Watamu Beach Lodge',
-    location: 'Watamu, Kilifi County',
-    description: 'Boutique lodge surrounded by indigenous gardens, minutes from Watamu Marine Park.',
-    price: 'KES 12,000 / night',
-    guests: 6,
-    emoji: '🌴',
-    tags: ['Garden', 'Lodge', 'Marine Park'],
-  },
-  {
-    id: 4,
-    name: 'Old Town Swahili House',
-    location: 'Malindi Old Town',
-    description: 'Restored historic Swahili architecture with authentic decor and rooftop terrace.',
-    price: 'KES 10,000 / night',
-    guests: 5,
-    emoji: '🕌',
-    tags: ['Heritage', 'Rooftop', 'Cultural'],
-  },
-  {
-    id: 5,
-    name: 'Driftwood Beach Club Room',
-    location: 'Malindi Town',
-    description: 'Classic Malindi accommodation with direct beach access, restaurant, and pool.',
-    price: 'KES 7,500 / night',
-    guests: 2,
-    emoji: '🏖️',
-    tags: ['Beach Club', 'Restaurant', 'Pool'],
-  },
-  {
-    id: 6,
-    name: 'Mangrove Eco Camp',
-    location: 'Mida Creek, Watamu',
-    description: 'Off-grid eco tents on the edge of Mida Creek, perfect for nature lovers.',
-    price: 'KES 5,000 / night',
-    guests: 2,
-    emoji: '⛺',
-    tags: ['Eco', 'Nature', 'Creek'],
-  },
-]
+import { useEffect, useState } from 'react'
+import { getAccommodations } from '../services/api'
 
 function Accommodations() {
+  const [accommodations, setAccommodations] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    getAccommodations()
+      .then(res => setAccommodations(res.data))
+      .catch(() => setError('Failed to load accommodations'))
+      .finally(() => setLoading(false))
+  }, [])
+
+  if (loading) return <div className="text-center py-20 text-stone-500">Loading accommodations...</div>
+  if (error) return <div className="text-center py-20 text-red-500">{error}</div>
+
   return (
     <div className="max-w-6xl mx-auto px-6 py-16">
       <div className="text-center mb-12">
@@ -89,7 +43,7 @@ function Accommodations() {
               </div>
               <div className="flex items-center justify-between text-sm">
                 <span className="text-stone-400">👥 Up to {acc.guests} guests</span>
-                <span className="font-semibold text-amber-600">{acc.price}</span>
+                <span className="font-semibold text-amber-600">KES {acc.price.toLocaleString()} / night</span>
               </div>
             </div>
           </div>

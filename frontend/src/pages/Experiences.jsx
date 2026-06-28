@@ -1,55 +1,21 @@
-const experiences = [
-  {
-    id: 1,
-    title: 'Deep Sea Fishing',
-    description: 'Head out into the Indian Ocean for marlin, sailfish, and tuna with experienced local captains.',
-    duration: 'Full day',
-    price: 'KES 15,000',
-    emoji: '🎣',
-  },
-  {
-    id: 2,
-    title: 'Marine Park Snorkeling',
-    description: 'Explore the vibrant coral reefs of Malindi Marine National Park teeming with tropical fish.',
-    duration: 'Half day',
-    price: 'KES 3,500',
-    emoji: '🤿',
-  },
-  {
-    id: 3,
-    title: 'Gede Ruins Cultural Tour',
-    description: 'Walk through the ancient Swahili ruins of Gede and learn about the rich coastal heritage.',
-    duration: '3 hours',
-    price: 'KES 2,000',
-    emoji: '🏛️',
-  },
-  {
-    id: 4,
-    title: 'Sunset Dhow Cruise',
-    description: 'Sail along the coast on a traditional dhow as the sun sets over the Indian Ocean.',
-    duration: '2 hours',
-    price: 'KES 4,500',
-    emoji: '⛵',
-  },
-  {
-    id: 5,
-    title: 'Watamu Turtle Watch',
-    description: 'Visit the Kenya Sea Turtle Conservation Program and witness nesting sea turtles up close.',
-    duration: 'Half day',
-    price: 'KES 2,500',
-    emoji: '🐢',
-  },
-  {
-    id: 6,
-    title: 'Arabuko-Sokoke Forest Walk',
-    description: 'Trek through one of East Africa\'s last remaining coastal forests, home to rare birds and elephants.',
-    duration: 'Half day',
-    price: 'KES 3,000',
-    emoji: '🌿',
-  },
-]
+import { useEffect, useState } from 'react'
+import { getExperiences } from '../services/api'
 
 function Experiences() {
+  const [experiences, setExperiences] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    getExperiences()
+      .then(res => setExperiences(res.data))
+      .catch(() => setError('Failed to load experiences'))
+      .finally(() => setLoading(false))
+  }, [])
+
+  if (loading) return <div className="text-center py-20 text-stone-500">Loading experiences...</div>
+  if (error) return <div className="text-center py-20 text-red-500">{error}</div>
+
   return (
     <div className="max-w-6xl mx-auto px-6 py-16">
       <div className="text-center mb-12">
@@ -71,7 +37,7 @@ function Experiences() {
               <p className="text-stone-500 text-sm mb-4">{exp.description}</p>
               <div className="flex items-center justify-between text-sm">
                 <span className="text-stone-400">⏱ {exp.duration}</span>
-                <span className="font-semibold text-amber-600">{exp.price}</span>
+                <span className="font-semibold text-amber-600">KES {exp.price.toLocaleString()}</span>
               </div>
             </div>
           </div>
