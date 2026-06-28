@@ -1,13 +1,61 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model Experience {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  duration    String
+  price       Float
+  emoji       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  bookings ExperienceBooking[]
+}
+
+model Accommodation {
+  id          Int      @id @default(autoincrement())
+  name        String
+  location    String
+  description String
+  price       Float
+  guests      Int
+  emoji       String
+  tags        String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  bookings AccommodationBooking[]
+}
+
+model ExperienceBooking {
+  id               Int        @id @default(autoincrement())
+  fullName         String
+  email            String
+  phone            String
+  date             DateTime
+  numberOfGuests   Int
+  specialRequests  String?
+  createdAt        DateTime   @default(now())
+  experience   Experience @relation(fields: [experienceId], references: [id])
+  experienceId Int
+}
+
+model AccommodationBooking {
+  id               Int           @id @default(autoincrement())
+  fullName         String
+  email            String
+  phone            String
+  checkIn          DateTime
+  checkOut         DateTime
+  numberOfGuests   Int
+  maidService      Boolean       @default(false)
+  specialRequests  String?
+  createdAt        DateTime      @default(now())
+  accommodation   Accommodation @relation(fields: [accommodationId], references: [id])
+  accommodationId Int
 }
