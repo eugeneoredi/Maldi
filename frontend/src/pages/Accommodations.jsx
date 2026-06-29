@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { getAccommodations } from '../services/api'
+import AccommodationBookingModal from '../components/AccommodationBookingModal'
 
 function Accommodations() {
   const [accommodations, setAccommodations] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [selected, setSelected] = useState(null)
 
   useEffect(() => {
     getAccommodations()
@@ -41,14 +43,26 @@ function Accommodations() {
                   <span key={tag} className="bg-stone-100 text-stone-600 text-xs px-2 py-1 rounded-full">{tag}</span>
                 ))}
               </div>
-              <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center justify-between text-sm mb-4">
                 <span className="text-stone-400">👥 Up to {acc.guests} guests</span>
                 <span className="font-semibold text-amber-600">KES {acc.price.toLocaleString()} / night</span>
               </div>
+              <button
+                onClick={() => setSelected(acc)}
+                className="w-full bg-amber-600 text-white py-2 rounded-full text-sm font-medium hover:bg-amber-700 transition">
+                Book Now
+              </button>
             </div>
           </div>
         ))}
       </div>
+
+      {selected && (
+        <AccommodationBookingModal
+          accommodation={selected}
+          onClose={() => setSelected(null)}
+        />
+      )}
     </div>
   )
 }

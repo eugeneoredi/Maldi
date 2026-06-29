@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { getExperiences } from '../services/api'
+import ExperienceBookingModal from '../components/ExperienceBookingModal'
 
 function Experiences() {
   const [experiences, setExperiences] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [selected, setSelected] = useState(null)
 
   useEffect(() => {
     getExperiences()
@@ -35,14 +37,26 @@ function Experiences() {
             <div className="p-6">
               <h3 className="text-lg font-bold text-stone-800 mb-2">{exp.title}</h3>
               <p className="text-stone-500 text-sm mb-4">{exp.description}</p>
-              <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center justify-between text-sm mb-4">
                 <span className="text-stone-400">⏱ {exp.duration}</span>
                 <span className="font-semibold text-amber-600">KES {exp.price.toLocaleString()}</span>
               </div>
+              <button
+                onClick={() => setSelected(exp)}
+                className="w-full bg-amber-600 text-white py-2 rounded-full text-sm font-medium hover:bg-amber-700 transition">
+                Book Now
+              </button>
             </div>
           </div>
         ))}
       </div>
+
+      {selected && (
+        <ExperienceBookingModal
+          experience={selected}
+          onClose={() => setSelected(null)}
+        />
+      )}
     </div>
   )
 }
