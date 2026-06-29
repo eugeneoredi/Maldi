@@ -12,4 +12,9 @@ export const getAccommodations = () => api.get('/api/accommodations')
 export const getAccommodation = (id) => api.get(`/api/accommodations/${id}`)
 export const bookAccommodation = (id, data) => api.post(`/api/accommodations/${id}/book`, data)
 
+export const adminLogin = (password) => api.post('/api/admin/login', { password })
+export const getAdminBookings = (token) => api.get('/api/admin/bookings', {
+  headers: { Authorization: `Bearer ${token}` }
+})
+
 export default api
