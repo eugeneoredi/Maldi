@@ -82,21 +82,21 @@ function Contact() {
               <span className="text-2xl">📧</span>
               <div>
                 <p className="font-semibold text-stone-800">Email</p>
-                <p>hello@maldi.co.ke</p>
+                <p>hellomaldi003@gmail.com</p>
               </div>
             </div>
             <div className="flex gap-4">
               <span className="text-2xl">📞</span>
               <div>
                 <p className="font-semibold text-stone-800">Phone</p>
-                <p>+254 700 000 000</p>
+                <p>+254 741 157 181</p>
               </div>
             </div>
             <div className="flex gap-4">
               <span className="text-2xl">🕐</span>
               <div>
                 <p className="font-semibold text-stone-800">Hours</p>
-                <p>Mon – Sat: 8am – 6pm EAT</p>
+                <p>Open 24/7</p>
               </div>
             </div>
           </div>
