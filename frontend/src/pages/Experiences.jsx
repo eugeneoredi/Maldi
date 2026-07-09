@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Clock, Waves } from 'lucide-react'
 import { getExperiences } from '../services/api'
 import ExperienceBookingModal from '../components/ExperienceBookingModal'
 
@@ -15,41 +16,62 @@ function Experiences() {
       .finally(() => setLoading(false))
   }, [])
 
-  if (loading) return <div className="text-center py-20 text-stone-500">Loading experiences...</div>
-  if (error) return <div className="text-center py-20 text-red-500">{error}</div>
-
   return (
-    <div className="max-w-6xl mx-auto px-6 py-16">
-      <div className="text-center mb-12">
-        <p className="text-amber-600 text-sm uppercase tracking-widest mb-2">What to Do</p>
-        <h1 className="text-4xl font-bold text-stone-800 mb-4">Experiences in Malindi</h1>
-        <p className="text-stone-500 max-w-xl mx-auto">
-          Handpicked activities that showcase the best of Kenya's coast — ocean, culture, and nature.
-        </p>
-      </div>
+    <div>
+      <section className="bg-ocean text-warm-white">
+        <div className="max-w-4xl mx-auto px-6 py-16 lg:py-20 text-center">
+          <p className="text-gold text-[12px] tracking-[0.2em] uppercase mb-4">What to Do</p>
+          <h1 className="font-display text-[36px] lg:text-[44px] text-balance">Experiences in Malindi</h1>
+          <p className="mt-4 text-warm-white/70 max-w-xl mx-auto">
+            Handpicked activities that showcase the best of Kenya's coast —
+            ocean, culture, and nature.
+          </p>
+        </div>
+      </section>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {experiences.map((exp) => (
-          <div key={exp.id} className="bg-white border border-stone-200 rounded-2xl overflow-hidden hover:shadow-md transition">
-            <div className="h-40 bg-stone-100 flex items-center justify-center text-5xl">
-              {exp.emoji}
+      <section className="bg-shell px-6 py-16 lg:py-20">
+        <div className="max-w-6xl mx-auto">
+          {loading && (
+            <div className="text-center py-20 text-stone">Loading experiences…</div>
+          )}
+          {error && (
+            <div className="text-center py-20 text-terracotta">{error}</div>
+          )}
+
+          {!loading && !error && (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {experiences.map((exp) => (
+                <div
+                  key={exp.id}
+                  className="bg-white border border-charcoal/10 rounded-2xl overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all"
+                >
+                  <div className="h-40 bg-gradient-to-br from-ocean to-lagoon flex items-center justify-center">
+                    <Waves size={36} className="text-gold-soft" strokeWidth={1.2} />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="font-display text-[19px] text-charcoal mb-2">{exp.title}</h3>
+                    <p className="text-stone text-[14px] mb-5 leading-relaxed">{exp.description}</p>
+                    <div className="flex items-center justify-between text-[13px] mb-5">
+                      <span className="flex items-center gap-1.5 text-stone">
+                        <Clock size={14} /> {exp.duration}
+                      </span>
+                      <span className="font-semibold text-gold">
+                        KES {exp.price.toLocaleString()}
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => setSelected(exp)}
+                      className="w-full bg-ocean text-warm-white py-2.5 rounded-full text-[13px] font-semibold hover:bg-ocean-2 transition-colors"
+                    >
+                      Book Now
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="p-6">
-              <h3 className="text-lg font-bold text-stone-800 mb-2">{exp.title}</h3>
-              <p className="text-stone-500 text-sm mb-4">{exp.description}</p>
-              <div className="flex items-center justify-between text-sm mb-4">
-                <span className="text-stone-400">⏱ {exp.duration}</span>
-                <span className="font-semibold text-amber-600">KES {exp.price.toLocaleString()}</span>
-              </div>
-              <button
-                onClick={() => setSelected(exp)}
-                className="w-full bg-amber-600 text-white py-2 rounded-full text-sm font-medium hover:bg-amber-700 transition">
-                Book Now
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+          )}
+        </div>
+      </section>
 
       {selected && (
         <ExperienceBookingModal

@@ -1,1 +1,63 @@
 @import "tailwindcss";
+@import "@fontsource/fraunces/500.css";
+@import "@fontsource/fraunces/600-italic.css";
+@import "@fontsource/fraunces/700.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+
+:root {
+  /* Maldi — premium coastal-resort palette */
+  --ocean: #0e2f3c;      /* deep ocean navy — primary dark */
+  --ocean-2: #164256;    /* lighter ocean, secondary dark */
+  --lagoon: #2f6f6a;     /* teal accent, secondary */
+  --gold: #b98a4f;       /* muted brass/gold accent */
+  --gold-soft: #d5ac77;  /* lighter gold for hover states */
+  --terracotta: #b5613f; /* warm coral accent, used sparingly */
+  --sand: #f4eee1;       /* warm ivory section background */
+  --shell: #fbf8f2;      /* lightest background, near-white */
+  --charcoal: #24211b;   /* body text on light backgrounds */
+  --stone: #6b6459;      /* supporting/secondary text */
+  --warm-white: #faf7f0; /* text on dark backgrounds */
+}
+
+@theme inline {
+  --color-ocean: var(--ocean);
+  --color-ocean-2: var(--ocean-2);
+  --color-lagoon: var(--lagoon);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-terracotta: var(--terracotta);
+  --color-sand: var(--sand);
+  --color-shell: var(--shell);
+  --color-charcoal: var(--charcoal);
+  --color-stone: var(--stone);
+  --color-warm-white: var(--warm-white);
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--shell);
+  color: var(--charcoal);
+  font-family: var(--font-sans);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+.text-balance { text-wrap: balance; }
+
+/* Signature wave divider used between sections — evokes the coastline
+   without relying on stock photography. */
+.wave-divider {
+  display: block;
+  width: 100%;
+  height: auto;
+}
