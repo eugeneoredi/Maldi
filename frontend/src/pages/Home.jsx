@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, Compass, ShieldCheck, Heart, Waves, Home as HomeIcon } from 'lucide-react'
 import WaveDivider from '../components/WaveDivider'
+import heroCoast from '../assets/images/hero-coast.jpg'
 
 const REASONS = [
   {
@@ -25,11 +26,17 @@ function Home() {
     <div>
       {/* Hero */}
       <section className="relative overflow-hidden bg-ocean text-warm-white">
+        <img
+          src={heroCoast}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+        />
         <div
           className="absolute inset-0 opacity-90"
           style={{
             background:
-              'radial-gradient(ellipse at 20% 20%, rgba(47,111,106,0.55), transparent 55%), radial-gradient(ellipse at 85% 75%, rgba(185,138,79,0.25), transparent 50%)',
+              'linear-gradient(180deg, rgba(14,47,60,0.75), rgba(14,47,60,0.55)), radial-gradient(ellipse at 85% 75%, rgba(185,138,79,0.25), transparent 50%)',
           }}
         />
         <div className="relative max-w-7xl mx-auto px-6 lg:px-10 pt-28 pb-32 lg:pt-36 lg:pb-40 text-center">

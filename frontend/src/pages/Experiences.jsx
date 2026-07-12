@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Clock, Waves } from 'lucide-react'
+import { Clock } from 'lucide-react'
 import { getExperiences } from '../services/api'
 import ExperienceBookingModal from '../components/ExperienceBookingModal'
+import fishingImg from '../assets/images/experience-fishing.jpg'
+import snorkelImg from '../assets/images/experience-snorkel.jpg'
+import sunsetImg from '../assets/images/experience-sunset.jpg'
+
+const PHOTOS = [fishingImg, snorkelImg, sunsetImg]
 
 function Experiences() {
   const [experiences, setExperiences] = useState([])
@@ -40,13 +45,18 @@ function Experiences() {
 
           {!loading && !error && (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {experiences.map((exp) => (
+              {experiences.map((exp, i) => (
                 <div
                   key={exp.id}
                   className="bg-white border border-charcoal/10 rounded-2xl overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all"
                 >
-                  <div className="h-40 bg-gradient-to-br from-ocean to-lagoon flex items-center justify-center">
-                    <Waves size={36} className="text-gold-soft" strokeWidth={1.2} />
+                  <div className="h-40 relative overflow-hidden">
+                    <img
+                      src={PHOTOS[i % PHOTOS.length]}
+                      alt={exp.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ocean/50 to-transparent" />
                   </div>
                   <div className="p-6">
                     <h3 className="font-display text-[19px] text-charcoal mb-2">{exp.title}</h3>

@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react'
-import { MapPin, Users, Home as HomeIcon } from 'lucide-react'
+import { MapPin, Users } from 'lucide-react'
 import { getAccommodations } from '../services/api'
 import AccommodationBookingModal from '../components/AccommodationBookingModal'
+import cottageImg from '../assets/images/accommodation-cottage.jpg'
+import villaImg from '../assets/images/accommodation-villa.jpg'
+import lodgeImg from '../assets/images/accommodation-lodge.jpg'
+
+const PHOTOS = [cottageImg, villaImg, lodgeImg]
 
 function Accommodations() {
   const [accommodations, setAccommodations] = useState([])
@@ -40,13 +45,18 @@ function Accommodations() {
 
           {!loading && !error && (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {accommodations.map((acc) => (
+              {accommodations.map((acc, i) => (
                 <div
                   key={acc.id}
                   className="bg-white border border-charcoal/10 rounded-2xl overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all"
                 >
-                  <div className="h-40 bg-gradient-to-br from-lagoon to-ocean-2 flex items-center justify-center">
-                    <HomeIcon size={36} className="text-gold-soft" strokeWidth={1.2} />
+                  <div className="h-40 relative overflow-hidden">
+                    <img
+                      src={PHOTOS[i % PHOTOS.length]}
+                      alt={acc.name}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ocean/50 to-transparent" />
                   </div>
                   <div className="p-6">
                     <h3 className="font-display text-[19px] text-charcoal mb-1">{acc.name}</h3>
