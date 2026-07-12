@@ -8,6 +8,7 @@ router.get('/', async (req, res) => {
     const accommodations = await prisma.accommodation.findMany()
     res.json(accommodations)
   } catch (error) {
+    console.error(error)
     res.status(500).json({ error: 'Failed to fetch accommodations' })
   }
 })
@@ -21,6 +22,7 @@ router.get('/:id', async (req, res) => {
     if (!accommodation) return res.status(404).json({ error: 'Accommodation not found' })
     res.json(accommodation)
   } catch (error) {
+    console.error(error)
     res.status(500).json({ error: 'Failed to fetch accommodation' })
   }
 })
@@ -44,6 +46,7 @@ router.post('/:id/book', async (req, res) => {
     })
     res.status(201).json(booking)
   } catch (error) {
+    console.error(error)
     res.status(500).json({ error: 'Failed to create booking' })
   }
 })
